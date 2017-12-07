@@ -19,8 +19,10 @@ The goals / steps of this project are the following:
 [image3]: ./report_img/recover1.jpg "Recovery Image"
 [image4]: ./report_img/recover2.jpg "Recovery Image"
 [image5]: ./report_img/recover3.jpg "Recovery Image"
-[image6]: ./report_img/placeholder_small.png "Normal Image"
-[image7]: ./report_img/placeholder_small.png "Flipped Image"
+[image6]: ./report_img/flip1.jpg "Normal Image"
+[image7]: ./report_img/flip2.jpg "Flipped Image"
+[image8]: ./report_img/bridge.jpg "Bridge Image"
+[image9]: ./report_img/dirt.jpg "Dirt Image"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -135,14 +137,18 @@ I then recorded the vehicle recovering from the left side and right sides of the
 ![Recover Step 2][image4]
 ![Recover Step 3][image5]
 
-Then I repeated this process on track two in order to get more data points.
+To augment the data sat, I also flipped images and angles thinking that this would creat more training data and solving the "too much left turn" issue for track 1. For example, here is an image that has then been flipped:
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+![Normal Image][image6]
+![Flipped Image][image7]
 
-![alt text][image6]
-![alt text][image7]
+Bridges seems different from the normal track. So I capture additional bridge images for training. For example, here is an image from bridge image set.
 
-Etc ....
+![Bridge Image][image8]
+
+And also for a section of the track without yellow line. See an image below.
+
+![Dirt Image][image9]
 
 After the collection process, I had X number of data points. I then preprocessed this data by ...
 
