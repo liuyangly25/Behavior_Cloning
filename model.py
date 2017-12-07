@@ -11,6 +11,7 @@ from random import shuffle
 
 plt.switch_backend('agg')
 
+# loading driving log
 lines = []
 with open('data/driving_log.csv') as csvfile:
 	reader = csv.reader(csvfile)
@@ -18,8 +19,10 @@ with open('data/driving_log.csv') as csvfile:
 		lines.append(line)
 	#lines.pop(0)
 
+# split train/valid sets
 train_samples, validation_samples = train_test_split(lines, test_size=0.2)
 
+# data generator
 def generator(samples, batch_size=32):
 	num_samples = len(samples)
 	while 1: # Loop forever so the generator never terminates
@@ -29,7 +32,7 @@ def generator(samples, batch_size=32):
 
 			images, angles = [], []
 			augmented_images, augmented_angles = [], []
-			correction = 0.2
+			correction = 0.15
 			for batch_sample in batch_samples:
 				for i in range(3):
 					source_path = batch_sample[i]
@@ -59,6 +62,7 @@ batch_size=32
 train_generator = generator(train_samples, batch_size)
 validation_generator = generator(validation_samples, batch_size)
 
+# NVIDIA Model
 inpshp = (160, 320, 3)
 
 model = Sequential()
@@ -71,6 +75,7 @@ model.add(Conv2D(36,5,5, subsample=(2,2), activation='relu'))
 model.add(Conv2D(48,5,5, subsample=(2,2), activation='relu'))
 model.add(Conv2D(64,3,3, activation='relu'))
 model.add(Conv2D(64,3,3, activation='relu'))
+model.add(Dropout(0.25))
 
 model.add(Flatten())
 model.add(Dense(100))
@@ -80,9 +85,10 @@ model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam')
 #model.fit(X_train, y_train, validation_split=0.3, shuffle=True, nb_epoch=3)
-history_obj = model.fit_generator(train_generator, samples_per_epoch= (3*len(train_samples)//batch_size)*batch_size, validation_data=validation_generator, nb_val_samples=len(validation_samples), nb_epoch=7)
+history_obj = model.fit_generator(train_generator, samples_per_epoch=(len(train_samples)//batch_size)*batch_size*3, validation_data=validation_generator, nb_val_samples=3*len(validation_samples), nb_epoch=3)
 print(history_obj.history.keys())
 
+# plot loss figure
 fig=plt.figure()
 plt.plot(history_obj.history['loss'])
 plt.plot(history_obj.history['val_loss'])
@@ -93,5 +99,6 @@ plt.legend(['training set', 'validation set'], loc='upper right')
 plt.show(block=True)
 fig.savefig('test.png')
 
+# save model for simulator
 model.save('model.h5')
 
