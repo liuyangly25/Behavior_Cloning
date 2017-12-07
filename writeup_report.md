@@ -15,12 +15,12 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./report_img/NVIDIA_model.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image2]: ./report_img/center_driving.jpg "Center Line Driving"
+[image3]: ./report_img/recover1.jpg "Recovery Image"
+[image4]: ./report_img/recover2.jpg "Recovery Image"
+[image5]: ./report_img/recover3.jpg "Recovery Image"
+[image6]: ./report_img/placeholder_small.png "Normal Image"
+[image7]: ./report_img/placeholder_small.png "Flipped Image"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -127,13 +127,13 @@ Here is a visualization of the architecture (note: visualizing the architecture 
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
-![alt text][image2]
+![Center Driving][image2]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to go back to good driving behavior. These images show what a recovery looks like starting from road margin back to center:
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
+![Recover Step 1][image3]
+![Recover Step 2][image4]
+![Recover Step 3][image5]
 
 Then I repeated this process on track two in order to get more data points.
 
