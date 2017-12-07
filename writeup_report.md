@@ -23,6 +23,7 @@ The goals / steps of this project are the following:
 [image7]: ./report_img/flip2.jpg "Flipped Image"
 [image8]: ./report_img/bridge.jpg "Bridge Image"
 [image9]: ./report_img/dirt.jpg "Dirt Image"
+[image10]: ./report_img/model_loss.png "Loss Image"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -142,7 +143,7 @@ To augment the data sat, I also flipped images and angles thinking that this wou
 ![Normal Image][image6]
 ![Flipped Image][image7]
 
-Bridges seems different from the normal track. So I capture additional bridge images for training. For example, here is an image from bridge image set.
+Bridges seems different from the normal track. So I capture additional bridge images for training. For example, here is an image from bridge image sets.
 
 ![Bridge Image][image8]
 
@@ -150,9 +151,13 @@ And also for a section of the track without yellow line. See an image below.
 
 ![Dirt Image][image9]
 
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+After the collection process, I had 7,542 number of data points. I then preprocessed this data by using normalization, adding left and right cameras and data augmentation. So, the total number of images is 45,252.
 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
+I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 3 as evidenced by proventing overfitting. See the loss figure below. I used an adam optimizer so that manually training the learning rate wasn't necessary.
+
+![Loss Image][image10]
+
+
