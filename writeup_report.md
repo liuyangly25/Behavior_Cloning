@@ -2,8 +2,6 @@
 
 ## Writeup Report
 
----
-
 **Behavioral Cloning Project**
 
 The goals / steps of this project are the following:
@@ -16,7 +14,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
+[image1]: ./report_img/NVIDIA_model.png "Model Visualization"
 [image2]: ./examples/placeholder.png "Grayscaling"
 [image3]: ./examples/placeholder_small.png "Recovery Image"
 [image4]: ./examples/placeholder_small.png "Recovery Image"
@@ -58,13 +56,15 @@ The model includes RELU layers to introduce nonlinearity (code line 69 - 73), an
 
 #### 2. Attempts to reduce overfitting in the model
 
-The model collected a large amount of data to reduce overfitting (22,626 images). 
+The model contains dropout layers in order to reduce overfitting (model.py lines 78). Also the model collected a large amount of data to reduce overfitting (22,626 images). 
 
 The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 21). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 #### 3. Model parameter tuning
 
 The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 81).
+
+The model also used 3 cameras, which has correction for left and right cameras (model.py line 35)
 
 #### 4. Appropriate training data
 
@@ -78,25 +78,50 @@ For details about how I created the training data, see the next section.
 
 The overall strategy for deriving a model architecture was to ...
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+My first step was to use a convolution neural network model similar to the VGG. I thought this model might be appropriate because it has a good accuracy in ImageNet.
+
+However, it yielded a big .h5 file. It also had poor control for the car.
+
+Then, I choosed the CNN similar to [NVIDIA approach](http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf). It has a good result in the real road test, which being said in the paper.
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
-To combat the overfitting, I modified the model so that ...
+To combat the overfitting, I modified the model by adding a dropout layer right after the last convolutional layer. And I tuned the keep_prob rate to be 0.25. 
 
-Then I ... 
+Then I added an output full connected layer of size 1, because our output for this project is the turning angle, which is just one number. 
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track, such as bridge, sharp turns, track-dirt-road intersections. To improve the driving behavior in these cases, I collected additional datas only at these locations.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
 #### 2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+The final model architecture (model.py lines 68-84) consisted of a convolution neural network with the following layers and layer sizes 
+
+| Layer         		|     Description	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| Input         		| 160x320x3 RGB image   						| 
+| Normalization     	| Lambda Function 								|
+| Convolution 5x5     	| 2x2 stride 									|
+| RELU					| Activation function							|
+| Convolution 5x5     	| 2x2 stride 									|
+| RELU					| Activation function							|
+| Convolution 5x5     	| 2x2 stride 									|
+| RELU					| Activation function							|
+| Convolution 3x3     	|  												|
+| RELU					| Activation function							|
+| Convolution 3x3     	| 			 									|
+| RELU					| Activation function							|
+| Dropout				| Keep probability 0.25 						|
+| Flatten 				| Flatten Layer									|
+| Fully connected		| output 100									|
+| Fully connected		| output 50										|
+| Fully connected		| output 10										|
+| Output 				| output 1										|
 
 Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
 
-![alt text][image1]
+![NVIDIA Model][image1]
 
 #### 3. Creation of the Training Set & Training Process
 
