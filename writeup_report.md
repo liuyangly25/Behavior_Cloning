@@ -160,4 +160,9 @@ I used this training data for training the model. The validation set helped dete
 
 ![Loss Image][image10]
 
+The result is very good but not perfect. Here is my suggestion for my future work. 
+
+1. Capture additional data on the part which car did not stay in center of lanes. This is to make car always staying in the center of two lanes.
+
+2. Try to decrease input image size to increase training speed without lossing accuracy.
 
